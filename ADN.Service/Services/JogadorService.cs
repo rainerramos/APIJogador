@@ -4,7 +4,7 @@ using ADN.Domain.Interfaces.Services;
 
 namespace ADN.Service.Services
 {
-    internal class JogadorService : IJogadorService
+    public class JogadorService : IJogadorService
     {
         private readonly IJogadorRepositorio _repositorio;
 
@@ -16,6 +16,11 @@ namespace ADN.Service.Services
         public async Task<List<Jogador>> GetAll()
         {
             return await _repositorio.GetAll();
+        }
+
+        public async Task Insert(Jogador jogador)
+        {
+            await _repositorio.Insert(jogador);
         }
     }
 }
