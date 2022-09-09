@@ -3,6 +3,7 @@ using ADN.Domain.DTO.Jogador;
 using ADN.Domain.Interfaces.Repositorio;
 using ADN.Domain.Interfaces.Services;
 using AutoMapper;
+using Microsoft.Extensions.Logging;
 
 namespace ADN.Service.Services
 {
@@ -10,16 +11,20 @@ namespace ADN.Service.Services
     {
         private readonly IJogadorRepositorio _repositorio;
         private readonly IMapper _mapper;
+        private readonly ILogger<JogadorService> _log;
 
         public JogadorService(IJogadorRepositorio repositorio,
-                              IMapper mapper)
+                              IMapper mapper, 
+                              ILogger<JogadorService> logger)
         {
             _repositorio = repositorio;
             _mapper = mapper;
+            _log = logger;
         }
 
         public async Task<List<Jogador>> GetAll()
         {
+            _log.LogInformation("Buscando jogadores no service");
             return await _repositorio.GetAll();
         }
 

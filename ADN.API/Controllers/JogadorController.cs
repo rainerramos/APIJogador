@@ -11,15 +11,19 @@ namespace ADN.API.Controllers
     public class JogadorController : ControllerBase
     {
         private readonly IJogadorService _service;
+        private readonly ILogger<JogadorController> _log;
 
-        public JogadorController(IJogadorService service)
+        public JogadorController(IJogadorService service,
+                                 ILogger<JogadorController> log)
         {
             _service = service;
+            _log = log;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
+            _log.LogInformation("Iniciando GetAll");
             return Ok(await _service.GetAll());
         }
 
