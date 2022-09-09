@@ -16,6 +16,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IJogadorService, JogadorService>();
 builder.Services.AddScoped<IJogadorRepositorio, JogadorRepositorio>();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
 

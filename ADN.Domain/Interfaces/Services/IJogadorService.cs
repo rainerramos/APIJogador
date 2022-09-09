@@ -1,10 +1,11 @@
 ﻿using ADN.Domain.Domain;
+using ADN.Domain.DTO.Jogador;
 
 namespace ADN.Domain.Interfaces.Services
 {
     public interface IJogadorService
     {
         Task<List<Jogador>> GetAll();
-        Task Insert(Jogador jogador);
+        Task Insert(JogadorInsertDTO jogadorDTO);
     }
 }

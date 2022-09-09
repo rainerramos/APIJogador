@@ -1,4 +1,5 @@
 ﻿using ADN.Domain.Domain;
+using ADN.Domain.DTO.Jogador;
 using ADN.Domain.Interfaces.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -23,9 +24,9 @@ namespace ADN.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Insert(Jogador estudante)
+        public async Task<IActionResult> Insert(JogadorInsertDTO jogadorDTO)
         {
-            await _service.Insert(estudante);
+            await _service.Insert(jogadorDTO);
             return StatusCode(201);
         }
     }
