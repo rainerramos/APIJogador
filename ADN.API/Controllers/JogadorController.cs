@@ -30,8 +30,17 @@ namespace ADN.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Insert(JogadorInsertDTO jogadorDTO)
         {
-            await _service.Insert(jogadorDTO);
-            return StatusCode(201);
+            try
+            {
+                _log.LogInformation("Salvando jogador");
+                await _service.Insert(jogadorDTO);
+                return StatusCode(201);
+            }
+            catch (Exception ex)
+            {
+                _log.LogError(ex, "Erro ao salvar jogador");
+                return StatusCode(500, "Erro ao salvar jogador, contate o administrativo");
+            }
         }
     }
     

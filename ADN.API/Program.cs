@@ -8,7 +8,7 @@ using ADN.Service.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 SeriLogConfig.AddSerilog(builder);
-builder.Services.Configure < MongoDBJogadorSettings > (
+builder.Services.Configure <MongoDBJogadorSettings> (
     builder.Configuration.GetSection("MongoDBJogadorSettings"));
 
 builder.Services.AddControllers();

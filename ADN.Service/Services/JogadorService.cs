@@ -4,6 +4,7 @@ using ADN.Domain.Interfaces.Repositorio;
 using ADN.Domain.Interfaces.Services;
 using AutoMapper;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace ADN.Service.Services
 {
@@ -30,8 +31,19 @@ namespace ADN.Service.Services
 
         public async Task Insert(JogadorInsertDTO jogadorDTO)
         {
-            Jogador jogador = _mapper.Map<Jogador>(jogadorDTO);
-            await _repositorio.Insert(jogador);
+            try
+            {
+                _log.LogInformation($"Salvando jogador {JsonConvert.SerializeObject(jogadorDTO)} no banco de dados");
+                Jogador jogador = _mapper.Map<Jogador>(jogadorDTO);
+
+                _log.LogInformation($"Jogador mapeado com sucesso {JsonConvert.SerializeObject(jogador)}es");
+                await _repositorio.Insert(jogador);
+            }
+            catch (Exception ex)
+            {
+                _log.LogError(ex, "Erro ao salvar jogador");
+                throw;
+            }
         }
     }
 }

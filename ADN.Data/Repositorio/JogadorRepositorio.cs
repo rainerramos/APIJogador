@@ -17,7 +17,7 @@ namespace ADN.Data.Repositorio
             _collection = mongoDatabase.GetCollection<Jogador>(mongoJogadorSettings.Value.CollectionName);
         }
 
-        public async Task<List<Jogador>> GetAll()
+        public async Task<List<Jogador>> GetAll()   
         {
             var result = await _collection.FindAsync(c => true);
             return result.ToList();
