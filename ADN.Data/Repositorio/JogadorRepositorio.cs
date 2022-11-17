@@ -16,16 +16,16 @@ namespace ADN.Data.Repositorio
             var mongoDatabase = mongoClient.GetDatabase(mongoJogadorSettings.Value.DatabaseName);
             _collection = mongoDatabase.GetCollection<Jogador>(mongoJogadorSettings.Value.CollectionName);
         }
+        
+        public async Task<List<Jogador>> GetAll() => await _collection.Find(c => true).ToListAsync();
 
-        public async Task<List<Jogador>> GetAll()   
+        public async Task<Jogador> GetById(string id)
         {
-            var result = await _collection.FindAsync(c => true);
-            return result.ToList();
+            var retorno = await _collection.FindAsync(c => c.Id == id);
+            return retorno.ToList().FirstOrDefault();
         }
+        public async Task Insert(Jogador jogador) => await _collection.InsertOneAsync(jogador);
 
-        public async Task Insert(Jogador jogador)
-        {
-            await _collection.InsertOneAsync(jogador);
-        }
+        public async Task Delete(Jogador jogador) => await _collection.DeleteOneAsync(x => x.Id == jogador.Id);                
     }
 }

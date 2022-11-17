@@ -23,8 +23,22 @@ namespace ADN.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            _log.LogInformation("Iniciando GetAll");
+            _log.LogInformation("Buscando lista de jogadores");
             return Ok(await _service.GetAll());
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById([FromRoute] string id)
+        {
+            _log.LogInformation("Buscando cadastro de jogador por Id");
+
+            var result = await _service.GetById(id);
+
+            if (result is not null)
+                return Ok(result);
+
+            return NotFound();
+
         }
 
         [HttpPost]
@@ -32,15 +46,22 @@ namespace ADN.API.Controllers
         {
             try
             {
-                _log.LogInformation("Salvando jogador");
+                _log.LogInformation("Salvando cadastro de jogador");
                 await _service.Insert(jogadorDTO);
                 return StatusCode(201);
             }
             catch (Exception ex)
             {
-                _log.LogError(ex, "Erro ao salvar jogador");
-                return StatusCode(500, "Erro ao salvar jogador, contate o administrativo");
+                _log.LogError(ex, "Erro ao salvar cadastro de jogador");
+                return StatusCode(500, "Erro ao salvar cadastro, contate o administrativo");
             }
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete([FromRoute] string id)
+        {
+            await _service.Delete(id);
+            return NoContent();            
         }
     }
     

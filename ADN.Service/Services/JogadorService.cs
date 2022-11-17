@@ -22,12 +22,14 @@ namespace ADN.Service.Services
             _mapper = mapper;
             _log = logger;
         }
-
+        
         public async Task<List<Jogador>> GetAll()
         {
             _log.LogInformation("Buscando jogadores no service");
             return await _repositorio.GetAll();
         }
+
+        public async Task<Jogador> GetById(string id) => await _repositorio.GetById(id);
 
         public async Task Insert(JogadorInsertDTO jogadorDTO)
         {
@@ -44,6 +46,13 @@ namespace ADN.Service.Services
                 _log.LogError(ex, "Erro ao salvar jogador");
                 throw;
             }
+        }
+
+        public async Task Delete(string id)
+        {
+            var idDelete = await GetById(id);
+
+            await _repositorio.Delete(idDelete);
         }
     }
 }
